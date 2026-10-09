@@ -1,39 +1,53 @@
-# Musa Scott — Cybersecurity Portfolio
+# Musa Scott | Cybersecurity Portfolio
 
-A responsive professional portfolio website featuring my cybersecurity projects, experience, and credentials.
+**Cybersecurity Professional | U.S. Army Veteran | IT Operations & Security**
 
-## Live site
+Welcome to my cybersecurity portfolio! This repository hosts my professional website, where I showcase hands-on cybersecurity projects, technical research, and experience in IT infrastructure and security operations.
 
-Publish using GitHub Pages. If your GitHub username is `ms16001`, name this repository `ms16001.github.io` and your site will be `https://ms16001.github.io/`. Your GitHub username is `ms16001`.
+## About Me
 
-## Deploy on GitHub Pages
+I'm a U.S. Army veteran and cybersecurity professional with a Master of Science in Computer Science and Engineering, specializing in Cybersecurity, from NYU Tandon School of Engineering.
 
-1. Create a new public GitHub repository named `ms16001.github.io` (or any repository name if you prefer a project site).
-2. Upload the **contents** of this folder to the root of the repository, preserving `assets/`.
-3. Go to **Settings → Pages → Build and deployment**, select **Deploy from a branch**, choose `main` and `/ (root)`, then save.
-4. Visit `https://ms16001.github.io/` (or `https://ms16001.github.io/<repo>/` for a project repository).
-5. Edit `index.html` and `project-tcp.html` to add your published TCP project repository link once it is public and reviewed.
+My background includes IT operations leadership, infrastructure administration, technical troubleshooting, network security, and supporting enterprise technology environments.
 
-## Local preview
+I'm focused on transitioning my experience into dedicated cybersecurity roles, particularly:
 
-Run `python3 -m http.server 8000` from this folder and open `http://localhost:8000`.
+- Security Operations Center (SOC) Analyst
+- Cybersecurity Analyst
+- Security Engineer
+- Vulnerability Management Analyst
 
-## Contents
+## Featured Cybersecurity Projects
 
-- `index.html`: portfolio homepage
-- `project-tcp.html`: SEED Labs TCP security case study
-- `styles.css`: responsive visual design
-- `script.js`: mobile navigation and footer year
-- `assets/`: screenshots from graded coursework
+### TCP Protocol Attacks & Security Analysis — SEED Labs
 
-## Before sharing with employers
+Conducted controlled network security experiments to investigate TCP vulnerabilities and defensive mechanisms.
 
-- Verify every experience claim and credential detail.
-- Add your reviewed, published GitHub project repository link.
-- Add a downloadable resume only after checking it contains no private details you don't want public.
-- Replace or expand case-study screenshots if you obtain higher-resolution originals or packet captures.
-- The screenshots are from a graded submission; the project is **not** described as a new reproduction or production penetration test.
+**Technical areas explored:**
+- TCP SYN flooding and SYN cookie mitigation
+- TCP reset attacks and connection termination
+- TCP session hijacking and packet injection
+- Reverse-shell behavior through compromised sessions
+- Network traffic inspection and analysis
 
-## Credits
+**Tools:** Python, Scapy, Wireshark, Linux, Docker, C
 
-The TCP case study is based on the [SEED Labs TCP Attacks Lab](https://seedsecuritylabs.org/Labs_20.04/Files/TCP_Attacks/TCP_Attacks.pdf). Coursework screenshots are included for documentation. Site fonts are loaded from Google Fonts; system fallbacks are available.
+[View TCP Security Project](https://ms16001.github.io/project-tcp.html)
+
+### Additional Projects
+
+Future portfolio updates will include digital forensics, vulnerability management, incident response, and security automation projects.
+
+## Technical Skills
+
+**Network Security:** TCP/IP, packet analysis, network troubleshooting, Wireshark
+
+**Security Tools:** Splunk, Nessus, Autopsy, Volatility, Scapy
+
+**Systems & Infrastructure:** Windows Server, Active Directory, Group Policy, Linux, Cisco ASA, VPN
+
+**Programming & Scripting:** Python, Bash, C, SQL
+
+## Education & Certifications
+
+- **M.S., Computer Science and Engineering — Cybersecurity
