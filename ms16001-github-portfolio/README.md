@@ -1,53 +1,56 @@
 # Musa Scott | Cybersecurity Portfolio
 
-**Cybersecurity Professional | U.S. Army Veteran | IT Operations & Security**
+U.S. Army veteran, CompTIA Security+ certified IT and cybersecurity professional, and NYU Tandon graduate. My experience spans healthcare IT operations, infrastructure administration, security investigations, and military logistics.
 
-Welcome to my cybersecurity portfolio! This repository hosts my professional website, where I showcase hands-on cybersecurity projects, technical research, and experience in IT infrastructure and security operations.
+This portfolio documents controlled coursework and lab analysis for employers interested in security operations, network defense, and vulnerability management.
 
-## About Me
+## Featured project: TCP Protocol Security
 
-I'm a U.S. Army veteran and cybersecurity professional with a Master of Science in Computer Science and Engineering, specializing in Cybersecurity, from NYU Tandon School of Engineering.
+[Read the TCP case study](project-tcp.html) · [Browse the portfolio homepage](index.html)
 
-My background includes IT operations leadership, infrastructure administration, technical troubleshooting, network security, and supporting enterprise technology environments.
+The SEED Labs case study covers four experiments. The existing write-up includes screenshots extracted from the original graded submission.
 
-I'm focused on transitioning my experience into dedicated cybersecurity roles, particularly:
+| Experiment | Analysis documented | Evidence |
+| --- | --- | --- |
+| SYN flooding and SYN cookies | Comparison of connection behavior with protection enabled and disabled | [Comparison screenshots](assets/syn-cookie-comparison.jpg) |
+| TCP reset spoofing | How a crafted reset can terminate an established Telnet connection when accepted | [Reset experiment](assets/tcp-reset-evidence.jpg) |
+| TCP session hijacking | Packet injection using TCP sequence and acknowledgment information | [Session-hijacking screenshot](assets/session-hijacking-evidence.jpg) |
+| Reverse shell via session hijacking | Impact of a compromised session in an isolated lab | [Reverse-shell screenshot](assets/reverse-shell-evidence.jpg) |
 
-- Security Operations Center (SOC) Analyst
-- Cybersecurity Analyst
-- Security Engineer
-- Vulnerability Management Analyst
+**Tools used:** Python, Scapy, C, Wireshark, Linux, and Docker.
 
-## Featured Cybersecurity Projects
+**Defensive lessons:** Monitor anomalous connection patterns, use layered denial-of-service controls, replace Telnet with SSH, segment management traffic, and correlate outbound connections with endpoint telemetry.
 
-### TCP Protocol Attacks & Security Analysis — SEED Labs
+### Evidence and limitations
 
-Conducted controlled network security experiments to investigate TCP vulnerabilities and defensive mechanisms.
+- The case study documents coursework; it does not represent testing against production systems.
+- The screenshots are from the original submission, not a new reproduction.
+- Raw packet captures are not currently included.
+- The session-hijacking submission omitted a required Wireshark frame showing injected code with SEQ/ACK values. The existing screenshot should not be treated as a substitute for that missing frame.
+- Some C starter code originated with SEED Labs. Preserve upstream attribution and review its license before publishing source.
 
-**Technical areas explored:**
-- TCP SYN flooding and SYN cookie mitigation
-- TCP reset attacks and connection termination
-- TCP session hijacking and packet injection
-- Reverse-shell behavior through compromised sessions
-- Network traffic inspection and analysis
+[SEED Labs TCP Attacks guide](https://seedsecuritylabs.org/Labs_20.04/Files/TCP_Attacks/TCP_Attacks.pdf)
 
-**Tools:** Python, Scapy, Wireshark, Linux, Docker, C
+## Professional background
 
-[View TCP Security Project](https://ms16001.github.io/project-tcp.html)
+At Mosaic Mental Health, I supported IT infrastructure and users, investigated recurring privileged-account lockouts using Windows Security logs and Sysinternals Process Monitor, and blocked suspicious external activity through a Cisco ASA firewall. My work also included endpoint hardening, access controls, VPN connectivity, and security awareness training.
 
-### Additional Projects
+In the U.S. Army, I coordinated repair parts and maintenance reporting across six battalion companies, supporting maintenance leadership and operational readiness.
 
-Future portfolio updates will include digital forensics, vulnerability management, incident response, and security automation projects.
+## Education and certifications
 
-## Technical Skills
+- M.S., Computer Science and Engineering, Cybersecurity concentration — NYU Tandon, May 2026
+- B.S., Information Technology Management — Berkeley College, August 2019
+- CompTIA Security+ — July 2026
+- Microsoft SC-200 — study in progress
+- Cybersecurity Analytics Certificate — Fullstack Academy, April 2023
 
-**Network Security:** TCP/IP, packet analysis, network troubleshooting, Wireshark
+## Additional work to document
 
-**Security Tools:** Splunk, Nessus, Autopsy, Volatility, Scapy
+Splunk Enterprise exercises in Immersive Labs, ARP security, digital forensics, and Bluetooth/mobile security are areas for future case studies. They are not presented here as published projects until their supporting material is added.
 
-**Systems & Infrastructure:** Windows Server, Active Directory, Group Policy, Linux, Cisco ASA, VPN
+Each new case study should include the objective, environment, actions taken, observed result, evidence, defensive implications, and limitations.
 
-**Programming & Scripting:** Python, Bash, C, SQL
+## Contact
 
-## Education & Certifications
-
-- **M.S., Computer Science and Engineering — Cybersecurity
+[LinkedIn](https://www.linkedin.com/in/musa-scott/) · [GitHub](https://github.com/ms16001/)
