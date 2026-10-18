@@ -2,7 +2,7 @@
 
 **Cybersecurity Professional | U.S. Army Veteran | IT Operations & Security**
 
-Welcome to my cybersecurity portfolio! This repository hosts my professional website, where I showcase hands-on cybersecurity projects, technical research, and experience in IT infrastructure and security operations.
+Welcome to my cybersecurity portfolio. This repository hosts my professional website, where I showcase hands-on cybersecurity projects, technical research, and experience in IT infrastructure and security operations.
 
 ## About Me
 
@@ -51,3 +51,10 @@ Future portfolio updates will include digital forensics, vulnerability managemen
 ## Education & Certifications
 
 - **M.S., Computer Science and Engineering — Cybersecurity
+
+
+## Evidence standards
+
+Original terminal and Wireshark captures are maintained as evidence of the isolated SEED Labs experiments. Screenshots are not representations of production systems. Some automatically generated presentation images were not substituted for original captures because exact terminal text and packet details must remain verifiable.
+
+The portfolio site's HTML entry point is `index.html` in the repository root for GitHub Pages deployment. TCP reset documentation distinguishes the manual Scapy reset from `auto_rst.py` automated traffic monitoring.
