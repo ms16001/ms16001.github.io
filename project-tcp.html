@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#071311">
+  <meta name="description" content="A recruiter-friendly walkthrough of Musa Scott's TCP security lab: SYN flooding, TCP reset spoofing, session hijacking, and reverse-shell analysis.">
+  <title>TCP Security Lab | Musa Scott</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="brand" href="index.html"><span class="brand-mark">MS</span><span>Musa Scott<small>Cybersecurity Portfolio</small></span></a>
+      <nav class="site-nav case-nav" aria-label="Case study navigation">
+        <a href="index.html">Portfolio</a>
+        <a class="nav-cta" href="#evidence">Evidence</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="case-hero shell">
+      <p class="eyebrow"><span></span> Featured case study · Network security</p>
+      <h1>Breaking TCP trust<br><em>to understand the defense.</em></h1>
+      <p class="case-lede">A six-step investigation of SYN flooding, forged TCP resets, session hijacking, and reverse-shell behavior in an authorized, isolated SEED Labs environment.</p>
+      <div class="case-meta">
+        <div><span>Environment</span><strong>Ubuntu · Docker · SEED Labs</strong></div>
+        <div><span>Tooling</span><strong>Scapy · Wireshark · C · Netcat</strong></div>
+        <div><span>Focus</span><strong>TCP state and packet injection</strong></div>
+      </div>
+    </section>
+
+    <section class="case-summary">
+      <div class="shell summary-grid">
+        <div>
+          <p class="section-number">EXECUTIVE SUMMARY</p>
+          <h2>What I set out to prove.</h2>
+        </div>
+        <div class="prose">
+          <p>TCP maintains connection state using flags, sequence numbers, and acknowledgments. In this lab, I tested what happens when an attacker can observe or predict that state and inject forged traffic into an unencrypted Telnet session.</p>
+          <p>The work demonstrates both sides of the problem: how protocol abuse appears in packet captures, and how controls such as SYN cookies, encrypted transport, segmentation, and monitoring reduce exposure.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="lab-map section">
+      <div class="shell">
+        <div class="section-heading">
+          <div><p class="section-number">LAB TOPOLOGY</p><h2>Small environment. Observable traffic.</h2></div>
+          <p>Private addresses shown are limited to the isolated lab network.</p>
+        </div>
+        <div class="topology" role="img" aria-label="Attacker at 10.9.0.1 observes a Telnet client at 10.9.0.6 communicating with a victim server at 10.9.0.5">
+          <div class="node"><span>ATTACKER</span><strong>10.9.0.1</strong><small>Packet crafting &amp; listener</small></div>
+          <div class="flow"><span>OBSERVE · FORGE · INJECT</span></div>
+          <div class="node"><span>TELNET CLIENT</span><strong>10.9.0.6</strong><small>Established session</small></div>
+          <div class="flow"><span>TCP / 23</span></div>
+          <div class="node"><span>VICTIM SERVER</span><strong>10.9.0.5</strong><small>Target service</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="evidence-section" id="evidence">
+      <div class="shell">
+        <div class="section-heading light-heading evidence-heading">
+          <div><p class="section-number">EVIDENCE WALKTHROUGH</p><h2>Follow the investigation.</h2></div>
+          <p>Each original capture is paired with the signal a recruiter should look for.</p>
+        </div>
+
+        <div class="evidence-list">
+          <article class="evidence-card">
+            <div class="evidence-copy">
+              <p class="evidence-step">01 / AVAILABILITY</p>
+              <h3>SYN flood exhausts half-open connections</h3>
+              <p>A C-based flood generator sends spoofed SYN requests to the victim's Telnet service while SYN cookies are disabled. The victim accumulates connections in <code>SYN_RECV</code>, and a legitimate connection attempt times out.</p>
+              <aside class="recruiter-note"><strong>Recruiter note</strong><span>Look at the upper-right terminal for multiple <code>SYN_RECV</code> entries and the center-right terminal for the timed-out Telnet connection.</span></aside>
+            </div>
+            <figure>
+              <a href="assets/01-syn-flood.jpg" target="_blank" rel="noopener noreferrer"><img src="assets/01-syn-flood.jpg" alt="SYN flood lab showing half-open SYN_RECV connections and a timed-out Telnet attempt" loading="lazy"></a>
+              <figcaption><span>Evidence 01</span> SYN cookies disabled; service availability degrades under the flood.</figcaption>
+            </figure>
+          </article>
+
+          <article class="evidence-card reverse">
+            <div class="evidence-copy">
+              <p class="evidence-step">02 / MITIGATION</p>
+              <h3>SYN cookies preserve legitimate access</h3>
+              <p>I repeated the flood with <code>net.ipv4.tcp_syncookies=1</code>. The attacker process remains active, but the legitimate client establishes a Telnet session—showing how the mitigation avoids allocating state for every unverified request.</p>
+              <aside class="recruiter-note"><strong>Recruiter note</strong><span>The top-right terminal confirms SYN cookies are enabled; the lower-right terminal shows the legitimate client reaching the victim login prompt.</span></aside>
+            </div>
+            <figure>
+              <a href="assets/02-syn-cookies.jpg" target="_blank" rel="noopener noreferrer"><img src="assets/02-syn-cookies.jpg" alt="SYN cookie comparison showing the mitigation enabled and a legitimate Telnet connection succeeding during the flood" loading="lazy"></a>
+              <figcaption><span>Evidence 02</span> Same attack condition, different defensive configuration.</figcaption>
+            </figure>
+          </article>
+
+          <article class="evidence-card">
+            <div class="evidence-copy">
+              <p class="evidence-step">03 / INTEGRITY</p>
+              <h3>A forged reset terminates the session</h3>
+              <p>After reading the live connection's addresses, ports, and sequence state in Wireshark, I built a Scapy packet with the RST flag set. The forged in-window reset is accepted and the Telnet session closes.</p>
+              <aside class="recruiter-note"><strong>Recruiter note</strong><span>Wireshark highlights the red RST frames. The lower-left terminal records “Connection closed by foreign host” after the crafted packet is sent.</span></aside>
+            </div>
+            <figure>
+              <a href="assets/03-manual-rst.jpg" target="_blank" rel="noopener noreferrer"><img src="assets/03-manual-rst.jpg" alt="Manual TCP reset experiment with a crafted Scapy RST packet, Wireshark evidence, and a closed Telnet session" loading="lazy"></a>
+              <figcaption><span>Evidence 03</span> Manual packet construction validates the required TCP fields.</figcaption>
+            </figure>
+          </article>
+
+          <article class="evidence-card reverse">
+            <div class="evidence-copy">
+              <p class="evidence-step">04 / AUTOMATION</p>
+              <h3>Traffic monitoring automates reset injection</h3>
+              <p>I extended the reset test into a Scapy sniffer that watches Telnet traffic and builds a corresponding reset from observed packet fields. Repeated terminal messages and Wireshark RST frames show the automated logic firing for both directions.</p>
+              <aside class="recruiter-note"><strong>Recruiter note</strong><span>The upper-left terminal is the live script output; the red packet rows on the right independently confirm the injected RST traffic.</span></aside>
+            </div>
+            <figure>
+              <a href="assets/04-automated-rst.jpg" target="_blank" rel="noopener noreferrer"><img src="assets/04-automated-rst.jpg" alt="Automated Scapy reset script monitoring Telnet traffic with repeated RST packets visible in Wireshark" loading="lazy"></a>
+              <figcaption><span>Evidence 04</span> Packet observation is converted into repeatable injection logic.</figcaption>
+            </figure>
+          </article>
+
+          <article class="evidence-card">
+            <div class="evidence-copy">
+              <p class="evidence-step">05 / SESSION TRUST</p>
+              <h3>In-window data is accepted as legitimate</h3>
+              <p>Using the active session's sequence and acknowledgment values, I injected a command into the Telnet stream. The victim executed the payload, and the listener received the contents of the lab's sample secret file.</p>
+              <aside class="recruiter-note"><strong>Recruiter note</strong><span>The script and Wireshark values appear across the top. The lower-right listener receiving “secret message!” is the outcome to verify.</span></aside>
+            </div>
+            <figure>
+              <a href="assets/05-session-hijacking.jpg" target="_blank" rel="noopener noreferrer"><img src="assets/05-session-hijacking.jpg" alt="Controlled session-hijacking lab showing packet fields, injected command, and sample secret text received by a listener" loading="lazy"></a>
+              <figcaption><span>Evidence 05</span> Correct TCP state lets forged application data blend into the session.</figcaption>
+            </figure>
+          </article>
+
+          <article class="evidence-card reverse">
+            <div class="evidence-copy">
+              <p class="evidence-step">06 / IMPACT</p>
+              <h3>Injected data establishes a reverse shell</h3>
+              <p>I replaced the single command with a reverse-shell payload and used Netcat as the listener. The callback reaches the attacker, and the shell can enumerate the victim's lab directory—demonstrating the impact of session injection on an unencrypted administrative protocol.</p>
+              <aside class="recruiter-note"><strong>Recruiter note</strong><span>The upper-left terminal shows the crafted payload. The lower-left listener receives the callback and prints <code>/home/seed</code> plus the lab directory listing.</span></aside>
+            </div>
+            <figure>
+              <a href="assets/06-reverse-shell.jpg" target="_blank" rel="noopener noreferrer"><img src="assets/06-reverse-shell.jpg" alt="Controlled reverse-shell experiment with injected payload, packet capture, Netcat callback, and victim directory listing" loading="lazy"></a>
+              <figcaption><span>Evidence 06</span> A controlled callback demonstrates the consequence, not just the packet mechanics.</figcaption>
+            </figure>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section defense-section">
+      <div class="shell">
+        <div class="section-heading">
+          <div><p class="section-number">DEFENSIVE TAKEAWAYS</p><h2>What changes in production.</h2></div>
+          <p>The value of the lab is the control logic it makes visible.</p>
+        </div>
+        <div class="defense-grid">
+          <article><span>01</span><h3>Replace Telnet</h3><p>Use SSH so encryption and host authentication prevent passive state observation and plaintext command injection.</p></article>
+          <article><span>02</span><h3>Protect connection state</h3><p>Enable SYN cookies and apply rate limiting, sensible backlogs, and upstream DDoS controls.</p></article>
+          <article><span>03</span><h3>Detect anomalies</h3><p>Alert on SYN spikes, unexpected resets, retransmission bursts, and unusual long-lived administrative sessions.</p></article>
+          <article><span>04</span><h3>Limit reachability</h3><p>Segment management services and restrict them with firewalls, access lists, VPNs, and least privilege.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="ethics-note">
+      <div class="shell ethics-inner">
+        <strong>Scope &amp; ethics</strong>
+        <p>All activity shown here was performed in an authorized, isolated SEED Labs environment against disposable Docker containers. The private IP addresses and sample “secret” data belong only to that lab.</p>
+      </div>
+    </section>
+
+    <section class="contact-section">
+      <div class="shell contact-inner">
+        <div><p class="section-number">NEXT STEP</p><h2>See the rest of the portfolio.</h2></div>
+        <div class="contact-actions"><a class="button button-light" href="index.html">Back to portfolio ←</a><a class="button button-outline-light" href="https://github.com/ms16001" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="shell footer-inner"><span>© <span id="year">2026</span> Musa Scott</span><span>Controlled lab. Original evidence.</span><a href="#main">Back to top ↑</a></div></footer>
+  <script src="script.js"></script>
+</body>
+</html>

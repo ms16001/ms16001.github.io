@@ -1,33 +1,35 @@
 # Musa Scott — Cybersecurity Portfolio
 
-This repository powers [ms16001.github.io](https://ms16001.github.io), a personal professional portfolio focused on technical security work and operational experience.
+This repository powers [ms16001.github.io](https://ms16001.github.io), a recruiter-focused professional portfolio for cybersecurity and IT work.
 
-## Website
+## Featured case study
 
-- **Home:** career summary, selected projects, professional experience, education, and certifications.
-- **TCP security case study:** four original SEED Labs experiments, documented with packet-capture evidence and defensive analysis.
-- **Technology:** plain semantic HTML, CSS, and JavaScript, deployed through GitHub Pages.
+The TCP security lab documents six stages of an authorized SEED Labs investigation:
 
-## Technical case study
+1. SYN flooding with SYN cookies disabled
+2. SYN-cookie mitigation comparison
+3. Manual TCP reset spoofing
+4. Automated TCP reset injection
+5. TCP session hijacking
+6. Reverse-shell impact demonstration
 
-The featured project covers TCP SYN flooding, SYN cookie behavior, manual and automated TCP reset spoofing, session hijacking, and reverse-shell behavior in an authorized isolated Docker environment.
+Every stage includes an original screenshot, a concise technical explanation, and a recruiter note identifying the evidence to inspect.
 
-Screenshots in `assets/` are original lab evidence. New, individually annotated replacements will be added once their image files have been uploaded. Do not confuse reconstructed illustrations with authentic packet captures.
+## Technology
+
+- Semantic HTML
+- Responsive CSS
+- Minimal vanilla JavaScript
+- GitHub Pages deployment from `main`
 
 ## Local preview
-
-Open `index.html` in a browser, or run a local static server from the repository root:
 
 ```bash
 python3 -m http.server 8000
 ```
 
-Then visit `http://localhost:8000`.
+Then open `http://localhost:8000`.
 
-## Deployment
+## Responsible-use note
 
-This repository is named `ms16001.github.io`. GitHub Pages should deploy from the `main` branch, repository root.
-
-## Lab attribution
-
-The SEED Labs experiments follow the [SEED Labs TCP Attacks guide](https://seedsecuritylabs.org/Labs_20.04/Files/TCP_Attacks/TCP_Attacks.pdf). All tests were performed in a controlled educational environment. The session-hijacking submission had a documented missing packet-capture frame, and the portfolio does not claim otherwise.
+All security activity shown on this site was performed in an authorized, isolated educational environment against disposable Docker containers. The site does not provide operational instructions for targeting third-party systems.
