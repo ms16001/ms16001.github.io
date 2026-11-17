@@ -1,60 +1,33 @@
-# Musa Scott | Cybersecurity Portfolio
+# Musa Scott — Cybersecurity Portfolio
 
-**Cybersecurity Professional | U.S. Army Veteran | IT Operations & Security**
+This repository powers [ms16001.github.io](https://ms16001.github.io), a personal professional portfolio focused on technical security work and operational experience.
 
-Welcome to my cybersecurity portfolio. This repository hosts my professional website, where I showcase hands-on cybersecurity projects, technical research, and experience in IT infrastructure and security operations.
+## Website
 
-## About Me
+- **Home:** career summary, selected projects, professional experience, education, and certifications.
+- **TCP security case study:** four original SEED Labs experiments, documented with packet-capture evidence and defensive analysis.
+- **Technology:** plain semantic HTML, CSS, and JavaScript, deployed through GitHub Pages.
 
-I'm a U.S. Army veteran and cybersecurity professional with a Master of Science in Computer Science and Engineering, specializing in Cybersecurity, from NYU Tandon School of Engineering.
+## Technical case study
 
-My background includes IT operations leadership, infrastructure administration, technical troubleshooting, network security, and supporting enterprise technology environments.
+The featured project covers TCP SYN flooding, SYN cookie behavior, manual and automated TCP reset spoofing, session hijacking, and reverse-shell behavior in an authorized isolated Docker environment.
 
-I'm focused on transitioning my experience into dedicated cybersecurity roles, particularly:
+Screenshots in `assets/` are original lab evidence. New, individually annotated replacements will be added once their image files have been uploaded. Do not confuse reconstructed illustrations with authentic packet captures.
 
-- Security Operations Center (SOC) Analyst
-- Cybersecurity Analyst
-- Security Engineer
-- Vulnerability Management Analyst
+## Local preview
 
-## Featured Cybersecurity Projects
+Open `index.html` in a browser, or run a local static server from the repository root:
 
-### TCP Protocol Attacks & Security Analysis — SEED Labs
+```bash
+python3 -m http.server 8000
+```
 
-Conducted controlled network security experiments to investigate TCP vulnerabilities and defensive mechanisms.
+Then visit `http://localhost:8000`.
 
-**Technical areas explored:**
-- TCP SYN flooding and SYN cookie mitigation
-- TCP reset attacks and connection termination
-- TCP session hijacking and packet injection
-- Reverse-shell behavior through compromised sessions
-- Network traffic inspection and analysis
+## Deployment
 
-**Tools:** Python, Scapy, Wireshark, Linux, Docker, C
+This repository is named `ms16001.github.io`. GitHub Pages should deploy from the `main` branch, repository root.
 
-[View TCP Security Project](https://ms16001.github.io/project-tcp.html)
+## Lab attribution
 
-### Additional Projects
-
-Future portfolio updates will include digital forensics, vulnerability management, incident response, and security automation projects.
-
-## Technical Skills
-
-**Network Security:** TCP/IP, packet analysis, network troubleshooting, Wireshark
-
-**Security Tools:** Splunk, Nessus, Autopsy, Volatility, Scapy
-
-**Systems & Infrastructure:** Windows Server, Active Directory, Group Policy, Linux, Cisco ASA, VPN
-
-**Programming & Scripting:** Python, Bash, C, SQL
-
-## Education & Certifications
-
-- **M.S., Computer Science and Engineering — Cybersecurity
-
-
-## Evidence standards
-
-Original terminal and Wireshark captures are maintained as evidence of the isolated SEED Labs experiments. Screenshots are not representations of production systems. Some automatically generated presentation images were not substituted for original captures because exact terminal text and packet details must remain verifiable.
-
-The portfolio site's HTML entry point is `index.html` in the repository root for GitHub Pages deployment. TCP reset documentation distinguishes the manual Scapy reset from `auto_rst.py` automated traffic monitoring.
+The SEED Labs experiments follow the [SEED Labs TCP Attacks guide](https://seedsecuritylabs.org/Labs_20.04/Files/TCP_Attacks/TCP_Attacks.pdf). All tests were performed in a controlled educational environment. The session-hijacking submission had a documented missing packet-capture frame, and the portfolio does not claim otherwise.
